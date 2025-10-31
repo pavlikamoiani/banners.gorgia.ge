@@ -1,21 +1,21 @@
 "use client"
 
-import { FaFilter } from "react-icons/fa6";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { BsFillEasel2Fill } from "react-icons/bs";
+import { FaFilter } from "react-icons/fa6";
 import { TbMessageReportFilled } from "react-icons/tb";
 import { IoExit } from "react-icons/io5";
-import { useState } from "react";
-
 
 export default function Sidebar({ isOpen, onClose, isCollapsed, onToggleCollapse }) {
     const [activeMenu, setActiveMenu] = useState(null);
     const [expandedMenus, setExpandedMenus] = useState({});
 
     const sidebarColumns = [
-        { icon: <FaFilter />, label: "ფილტრი", subItems: ["ფილიალი/ადგილი", "ტიპი", "მასალა", "სექცია"] },
-        { icon: <BsFillEasel2Fill />, label: "იჯარა", subItems: ["გორგიას ბანერები", "ნაქირავები ბანერები", "ფართები", "დისტრიბუცია"] },
-        { icon: <TbMessageReportFilled />, label: "რეპორტი", subItems: ["ბანერების მოიჯარეები", "ფართების მოიჯარეები", "ნაქირავები ბანერები"] },
-        { icon: <IoExit />, label: "გასვლა" },
+        { icon: <FaFilter />, label: "ფილტრი", route: "/filter", subItems: [{ label: "ფილიალი/ადგილი", route: "/filter/branch" }, { label: "ტიპი", route: "/filter/type" }, { label: "მასალა", route: "/filter/material" }, { label: "სექცია", route: "/filter/section" }] },
+        { icon: <BsFillEasel2Fill />, label: "იჯარა", route: "/rental", subItems: [{ label: "გორგიას ბანერები", route: "/rental/gorgia" }, { label: "ნაქირავები ბანერები", route: "/rental/leased" }, { label: "ფართები", route: "/rental/spaces" }, { label: "დისტრიბუცია", route: "/rental/distribution" }] },
+        { icon: <TbMessageReportFilled />, label: "რეპორტი", route: "/report", subItems: [{ label: "ბანერების მოიჯარეები", route: "/report/tenants" }, { label: "ფართების მოიჯარეები", route: "/report/spaces" }, { label: "ნაქირავები ბანერები", route: "/report/leased" }] },
+        { icon: <IoExit />, label: "გასვლა", route: "/logout" },
     ]
 
     const toggleMenu = (index) => {
@@ -56,9 +56,9 @@ export default function Sidebar({ isOpen, onClose, isCollapsed, onToggleCollapse
                             }`}
                     >
                         {isCollapsed ? (
-                            <img src="logo.png" className="h-7 w-7" />
+                            <img src="/logo.png" className="h-7 w-7" />
                         ) : (
-                            <img src="gorgia.png" className="p-3" />
+                            <img src="/gorgia.png" className="p-3" />
                         )}
                     </div>
                 </div>
@@ -82,9 +82,9 @@ export default function Sidebar({ isOpen, onClose, isCollapsed, onToggleCollapse
                                         <ul className="ml-8 mt-2 space-y-1">
                                             {item.subItems.map((subItem, subIndex) => (
                                                 <li key={subIndex}>
-                                                    <button className="flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer hover:bg-white/20 transition-colors text-sm w-full text-left">
-                                                        {subItem}
-                                                    </button>
+                                                    <Link to={subItem.route} className="flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer hover:bg-white/20 transition-colors text-sm w-full text-left">
+                                                        {subItem.label}
+                                                    </Link>
                                                 </li>
                                             ))}
                                         </ul>
