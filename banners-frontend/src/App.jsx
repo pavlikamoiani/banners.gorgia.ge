@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Routes, Route } from "react-router-dom"
-import { BrowserRouter } from 'react-router-dom'
+import { useNavigate, useLocation, Routes, Route } from "react-router-dom"
 import Sidebar from "./assets/components/Sidebar"
 import Header from "./assets/components/Header"
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
@@ -18,36 +17,58 @@ import RentalGorgia from "./assets/pages/rental/RentalGorgia";
 import Leased from "./assets/pages/rental/Leased";
 import Spaces from "./assets/pages/rental/Spaces";
 import Distribution from "./assets/pages/rental/Distribution";
+import BannerReport from "./assets/pages/report/BannerReport";
+import SpacesReport from "./assets/pages/report/SpacesReport";
+import LeasedReport from "./assets/pages/report/LeasedReport";
+import Login from "./assets/components/login";
 
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleLogin = () => {
+    // Perform login logic here
+    // On successful login, navigate to the desired route
+    navigate("/login");
+  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
   }
 
-  return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-gray-50">
-        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} isCollapsed={isSidebarCollapsed} onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)} />
+  const isLoginPage = location.pathname === "/login";
 
-        <main className={`min-h-screen transition-all duration-300 ${isSidebarCollapsed ? 'lg:ml-[5.8rem]' : 'lg:ml-64'}`}>
-          <Header onMenuClick={toggleSidebar} />
-          <div className="p-6 lg:p-8">
-            <div className="max-w-8xl mx-auto">
-              <div className="">
-                <Routes>
-                  <Route path="/filter/branch" element={<Branch />} />
-                  <Route path="/filter/type" element={<TypeFilter />} />
-                  <Route path="/filter/material" element={<MaterialFilter />} />
-                  <Route path="/filter/section" element={<SectionFilter />} />
-                  <Route path="/rental/gorgia" element={<RentalGorgia />} />
-                  <Route path="/rental/leased" element={<Leased />} />
-                  <Route path="/rental/spaces" element={<Spaces />} />
-                  <Route path="/rental/distribution" element={<Distribution />} />
-                </Routes>
-                {/* <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {!isLoginPage && (
+        <Sidebar
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+          isCollapsed={isSidebarCollapsed}
+          onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+        />
+      )}
+      <main className={`min-h-screen transition-all duration-300 ${!isLoginPage ? (isSidebarCollapsed ? 'lg:ml-[5.8rem]' : 'lg:ml-64') : ''}`}>
+        {!isLoginPage && <Header onMenuClick={toggleSidebar} onLogin={handleLogin} />}
+        <div className={!isLoginPage ? "p-6 lg:p-8" : ""}>
+          <div className={!isLoginPage ? "max-w-8xl mx-auto" : ""}>
+            <Routes>
+              <Route path="/filter/branch" element={<Branch />} />
+              <Route path="/filter/type" element={<TypeFilter />} />
+              <Route path="/filter/material" element={<MaterialFilter />} />
+              <Route path="/filter/section" element={<SectionFilter />} />
+              <Route path="/rental/gorgia" element={<RentalGorgia />} />
+              <Route path="/rental/leased" element={<Leased />} />
+              <Route path="/rental/spaces" element={<Spaces />} />
+              <Route path="/rental/distribution" element={<Distribution />} />
+              <Route path="/report/banner" element={<BannerReport />} />
+              <Route path="/report/spaces" element={<SpacesReport />} />
+              <Route path="/report/leased" element={<LeasedReport />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+            {/* <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-gray-600 text-sm font-medium">ყველა ბანერები</p>
@@ -80,11 +101,9 @@ export default function App() {
                     </div>
                   </div>
                 </div> */}
-              </div>
-            </div>
           </div>
-        </main >
-      </div >
-    </BrowserRouter>
+        </div>
+      </main >
+    </div >
   )
 }

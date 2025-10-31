@@ -14,7 +14,7 @@ export default function Sidebar({ isOpen, onClose, isCollapsed, onToggleCollapse
     const sidebarColumns = [
         { icon: <FaFilter />, label: "ფილტრი", route: "/filter", subItems: [{ label: "ფილიალი/ადგილი", route: "/filter/branch" }, { label: "ტიპი", route: "/filter/type" }, { label: "მასალა", route: "/filter/material" }, { label: "სექცია", route: "/filter/section" }] },
         { icon: <BsFillEasel2Fill />, label: "იჯარა", route: "/rental", subItems: [{ label: "გორგიას ბანერები", route: "/rental/gorgia" }, { label: "ნაქირავები ბანერები", route: "/rental/leased" }, { label: "ფართები", route: "/rental/spaces" }, { label: "დისტრიბუცია", route: "/rental/distribution" }] },
-        { icon: <TbMessageReportFilled />, label: "რეპორტი", route: "/report", subItems: [{ label: "ბანერების მოიჯარეები", route: "/report/tenants" }, { label: "ფართების მოიჯარეები", route: "/report/spaces" }, { label: "ნაქირავები ბანერები", route: "/report/leased" }] },
+        { icon: <TbMessageReportFilled />, label: "რეპორტი", route: "/report", subItems: [{ label: "ბანერების მოიჯარეები", route: "/report/banner" }, { label: "ფართების მოიჯარეები", route: "/report/spaces" }, { label: "ნაქირავები ბანერები", route: "/report/leased" }] },
         { icon: <IoExit />, label: "გასვლა", route: "/logout" },
     ]
 

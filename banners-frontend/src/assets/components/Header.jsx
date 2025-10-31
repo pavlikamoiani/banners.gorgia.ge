@@ -1,6 +1,9 @@
 "use client"
 
-export default function Header({ onMenuClick }) {
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+
+export default function Header({ onMenuClick, onLogin }) {
     return (
         <header className="bg-white border-b border-gray-200 sticky top-0 z-20 shadow-sm">
             <div className="flex items-center justify-between p-6 pl-20 lg:pl-6">
@@ -20,7 +23,7 @@ export default function Header({ onMenuClick }) {
                 </div>
 
                 <div className="hidden md:flex items-center gap-4">
-                    <button className="px-6 py-2 bg-[#0173b1] text-white rounded-lg hover:bg-[#015a8f] transition-colors font-medium shadow-sm">
+                    <button onClick={onLogin} className="px-6 py-2 bg-[#0173b1] text-white rounded-lg hover:bg-[#015a8f] transition-colors font-medium shadow-sm">
                         Log In
                     </button>
                     {/* <button className="px-6 py-2 bg-[#0173b1] text-white rounded-lg hover:bg-[#015a8f] transition-colors font-medium shadow-sm">
@@ -28,6 +31,6 @@ export default function Header({ onMenuClick }) {
                     </button> */}
                 </div>
             </div>
-        </header>
+        </header >
     )
 }
