@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { FaRegUser } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function Header({ onMenuClick }) {
     return (
@@ -24,9 +24,9 @@ export default function Header({ onMenuClick }) {
                 </div>
 
                 <div className="hidden md:flex items-center gap-4">
-                    <button className="p-2 bg-[#0173b1] text-white rounded-[50%] hover:bg-[#015a8f] transition-colors font-medium shadow-sm">
-                        <FaRegUser className="text-2xl" />
-                    </button>
+                    {/* <button>
+                        <FaUserCircle className="text-4xl text-[#0173b1]" />
+                    </button> */}
                     {/* <button className="px-6 py-2 bg-[#0173b1] text-white rounded-lg hover:bg-[#015a8f] transition-colors font-medium shadow-sm">
                         Get Started
                     </button> */}

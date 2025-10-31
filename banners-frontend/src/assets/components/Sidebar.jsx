@@ -6,10 +6,28 @@ import { BsFillEasel2Fill } from "react-icons/bs";
 import { FaFilter } from "react-icons/fa6";
 import { TbMessageReportFilled } from "react-icons/tb";
 import { IoExit } from "react-icons/io5";
+import defaultInstance from "../../api/defaultinstance";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar({ isOpen, onClose, isCollapsed, onToggleCollapse }) {
     const [activeMenu, setActiveMenu] = useState(null);
     const [expandedMenus, setExpandedMenus] = useState({});
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await defaultInstance.post("/logout");
+            localStorage.removeItem("auth_token");
+            dispatch(logout());
+            navigate("/login");
+        } catch (error) {
+            console.error("Logout failed:", error);
+            return;
+        }
+    }
 
     const sidebarColumns = [
         { icon: <FaFilter />, label: "ფილტრი", route: "/filter", subItems: [{ label: "ფილიალი/ადგილი", route: "/filter/branch" }, { label: "ტიპი", route: "/filter/type" }, { label: "მასალა", route: "/filter/material" }, { label: "სექცია", route: "/filter/section" }] },
@@ -67,28 +85,43 @@ export default function Sidebar({ isOpen, onClose, isCollapsed, onToggleCollapse
                     <ul className="space-y-2">
                         {sidebarColumns.map((item, index) => (
                             <li key={index} >
-                                <button
-                                    onClick={() => toggleMenu(index)}
-                                    className="flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer hover:bg-white/10 transition-colors group w-full text-left"
-                                    title={isCollapsed ? item.label : undefined}
-                                >
-                                    <span className="text-xl">{item.icon}</span>
-                                    {!isCollapsed && (
-                                        <span className="font-medium group-hover:translate-x-1 transition-transform">{item.label}</span>
-                                    )}
-                                </button>
-                                {item.subItems && !isCollapsed && (
-                                    <div className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedMenus[index] ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                        <ul className="ml-8 mt-2 space-y-1">
-                                            {item.subItems.map((subItem, subIndex) => (
-                                                <li key={subIndex}>
-                                                    <Link to={subItem.route} className="flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer hover:bg-white/20 transition-colors text-sm w-full text-left">
-                                                        {subItem.label}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
+                                {item.label === "გასვლა" ? (
+                                    <button
+                                        onClick={handleLogout}
+                                        className="flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer hover:bg-white/10 transition-colors group w-full text-left"
+                                        title={isCollapsed ? item.label : undefined}
+                                    >
+                                        <span className="text-xl">{item.icon}</span>
+                                        {!isCollapsed && (
+                                            <span className="font-medium group-hover:translate-x-1 transition-transform">{item.label}</span>
+                                        )}
+                                    </button>
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={() => toggleMenu(index)}
+                                            className="flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer hover:bg-white/10 transition-colors group w-full text-left"
+                                            title={isCollapsed ? item.label : undefined}
+                                        >
+                                            <span className="text-xl">{item.icon}</span>
+                                            {!isCollapsed && (
+                                                <span className="font-medium group-hover:translate-x-1 transition-transform">{item.label}</span>
+                                            )}
+                                        </button>
+                                        {item.subItems && !isCollapsed && (
+                                            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedMenus[index] ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                                <ul className="ml-8 mt-2 space-y-1">
+                                                    {item.subItems.map((subItem, subIndex) => (
+                                                        <li key={subIndex}>
+                                                            <Link to={subItem.route} className="flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer hover:bg-white/20 transition-colors text-sm w-full text-left">
+                                                                {subItem.label}
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </>
                                 )}
                             </li>
                         ))}

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../store/userSlice";
 import defaultInstance from "../../api/defaultinstance";
 
-
 const Login = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -17,7 +16,6 @@ const Login = () => {
             const response = await defaultInstance.post("/login", { email, password });
             localStorage.setItem("auth_token", response.data.token);
             dispatch(login({ user: response.data.user, token: response.data.token }));
-            console.log("Login successful:", response.data);
             navigate("/filter/branch");
         } catch (error) {
             console.error("Login failed:", error);
@@ -43,7 +41,7 @@ const Login = () => {
                                 className="w-full px-4 py-3 rounded-md bg-blue-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#06396a] transition"
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
-                                placeholder="admin@gmail.com"
+                                placeholder="test@gorgia.ge"
                             />
                         </div>
                         <div className="mb-6">
