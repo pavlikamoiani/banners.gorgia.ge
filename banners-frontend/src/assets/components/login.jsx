@@ -27,7 +27,7 @@ const Login = () => {
         <div className="min-h-screen flex items-center justify-center bg-[#06396a]">
             <div className="bg-white rounded-xl shadow-lg flex w-full max-w-4xl overflow-hidden">
                 <div className="hidden md:flex flex-col items-center justify-center bg-blue-200 w-1/2 p-10">
-                    <img src="/gorgia.png" alt="Logo" className="w-80 max-w-full mb-6" />
+                    <img src="/login.png" alt="Logo" className="w-80 max-w-full mb-6" />
                 </div>
                 <div className="flex flex-col justify-center w-full md:w-1/2 p-10">
                     <form className="w-full max-w-md mx-auto" onSubmit={handleSubmit}>
@@ -59,7 +59,7 @@ const Login = () => {
                         </div>
                         <button
                             type="submit"
-                            className="w-full py-3 bg-[#06396a] text-white rounded-md font-semibold text-lg hover:bg-[#195a8d] transition"
+                            className="w-full py-3 bg-[#06396a] text-white rounded-md font-semibold text-lg cursor-pointer hover:bg-[#195a8d] transition"
                         >
                             შესვლა
                         </button>
