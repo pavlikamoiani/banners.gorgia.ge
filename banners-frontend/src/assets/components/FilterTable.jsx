@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TableWrapper from "./TableWrapper";
 
-const FilterTable = ({ columnDefs, fetchData }) => {
+const FilterTable = ({ columnDefs, fetchData, onDeleted, ...props }) => {
     const [rowData, setRowData] = useState([]);
 
     useEffect(() => {
@@ -10,7 +10,12 @@ const FilterTable = ({ columnDefs, fetchData }) => {
 
     return (
         <div className="w-full h-[750px] ag-theme-alpine">
-            <TableWrapper rowData={rowData} columnDefs={columnDefs} />
+            <TableWrapper
+                rowData={rowData}
+                columnDefs={columnDefs}
+                onDeleted={onDeleted}
+                {...props}
+            />
         </div>
     );
 };
