@@ -37,7 +37,7 @@ export default function Sidebar({ isOpen, onClose, isCollapsed, onToggleCollapse
             >
                 <button
                     onClick={onToggleCollapse}
-                    className="hidden lg:flex absolute -right-3 top-8 w-6 h-6 bg-white text-[#0173b1] rounded-full items-center justify-center shadow-lg hover:bg-gray-100 transition-colors z-50"
+                    className="hidden lg:flex absolute -right-3 top-8 w-6 h-6 bg-white text-[#0173b1] rounded-full items-center justify-center shadow-lg hover:bg-gray-100 transition-colors z-50 cursor-pointer"
                     aria-label={isCollapsed ? "Развернуть sidebar" : "Свернуть sidebar"}
                 >
                     <svg

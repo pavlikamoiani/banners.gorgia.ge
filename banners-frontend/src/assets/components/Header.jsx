@@ -2,8 +2,9 @@
 
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { FaRegUser } from "react-icons/fa";
 
-export default function Header({ onMenuClick, onLogin }) {
+export default function Header({ onMenuClick }) {
     return (
         <header className="bg-white border-b border-gray-200 sticky top-0 z-20 shadow-sm">
             <div className="flex items-center justify-between p-6 pl-20 lg:pl-6">
@@ -23,8 +24,8 @@ export default function Header({ onMenuClick, onLogin }) {
                 </div>
 
                 <div className="hidden md:flex items-center gap-4">
-                    <button onClick={onLogin} className="px-6 py-2 bg-[#0173b1] text-white rounded-lg hover:bg-[#015a8f] transition-colors font-medium shadow-sm">
-                        Log In
+                    <button className="p-2 bg-[#0173b1] text-white rounded-[50%] hover:bg-[#015a8f] transition-colors font-medium shadow-sm">
+                        <FaRegUser className="text-2xl" />
                     </button>
                     {/* <button className="px-6 py-2 bg-[#0173b1] text-white rounded-lg hover:bg-[#015a8f] transition-colors font-medium shadow-sm">
                         Get Started

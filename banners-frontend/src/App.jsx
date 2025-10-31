@@ -1,9 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useLocation, Routes, Route } from "react-router-dom"
 import Sidebar from "./assets/components/Sidebar"
 import Header from "./assets/components/Header"
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "./store/userSlice";
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -27,12 +29,25 @@ export default function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector(state => state.user);
 
-  const handleLogin = () => {
-    // Perform login logic here
-    // On successful login, navigate to the desired route
+  useEffect(() => {
+    const token = localStorage.getItem("auth_token");
+    if (token && !isAuthenticated) {
+      dispatch(login({ user: null, token }));
+    } else if (!token && !isAuthenticated) {
+      dispatch(logout());
+      if (location.pathname !== "/login") {
+        navigate("/login");
+      }
+    }
+  }, [dispatch, isAuthenticated, navigate, location.pathname]);
+
+  if (!isAuthenticated && location.pathname !== "/login") {
     navigate("/login");
-  };
+    return null;
+  }
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
@@ -51,7 +66,7 @@ export default function App() {
         />
       )}
       <main className={`min-h-screen transition-all duration-300 ${!isLoginPage ? (isSidebarCollapsed ? 'lg:ml-[5.8rem]' : 'lg:ml-64') : ''}`}>
-        {!isLoginPage && <Header onMenuClick={toggleSidebar} onLogin={handleLogin} />}
+        {!isLoginPage && <Header onMenuClick={toggleSidebar} />}
         <div className={!isLoginPage ? "p-6 lg:p-8" : ""}>
           <div className={!isLoginPage ? "max-w-8xl mx-auto" : ""}>
             <Routes>

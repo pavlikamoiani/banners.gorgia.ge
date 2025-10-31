@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../store/userSlice";
+import defaultInstance from "../../api/defaultinstance";
+
 
 const Login = () => {
     const [email, setEmail] = useState();
@@ -9,10 +11,18 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(login({ email, password }));
-        navigate("/filter/branch");
+        try {
+            const response = await defaultInstance.post("/login", { email, password });
+            localStorage.setItem("auth_token", response.data.token);
+            dispatch(login({ user: response.data.user, token: response.data.token }));
+            console.log("Login successful:", response.data);
+            navigate("/filter/branch");
+        } catch (error) {
+            console.error("Login failed:", error);
+            return;
+        }
     }
 
     return (
