@@ -24,7 +24,7 @@ const TypeFilter = () => {
 
     const handleAddType = async (value) => {
         try {
-            await defaultInstance.post("/filters", { type: "type", name: value });
+            await defaultInstance.post("/filters", { type: "type", name: value.name });
             setIsModalOpen(false);
             setTableKey(prev => prev + 1);
         } catch (error) {
@@ -32,6 +32,10 @@ const TypeFilter = () => {
             return;
         }
     };
+
+    const modalFields = [
+        { name: "name", label: "ბანერის ტიპი", type: "text", placeholder: "შეიყვანეთ ბანერის ტიპი" }
+    ];
 
     return (
         <div className="w-full h-[750px] ag-theme-alpine flex flex-col items-end">
@@ -47,9 +51,7 @@ const TypeFilter = () => {
                 onClose={() => setIsModalOpen(false)}
                 onSubmit={handleAddType}
                 title="ტიპის დამატება"
-                inputLabel="ტიპის დასახელება"
-                inputPlaceholder="ტიპის დასახელების შეყვანა"
-                showInput
+                fields={modalFields}
             />}
             <FilterTable
                 key={tableKey}

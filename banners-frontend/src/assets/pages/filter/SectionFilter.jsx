@@ -22,7 +22,7 @@ const SectionFilter = () => {
 
     const handleAddSection = async (value) => {
         try {
-            await defaultInstance.post("/filters", { type: "section", name: value });
+            await defaultInstance.post("/filters", { type: "section", name: value.name });
             setIsModalOpen(false);
             setTableKey(prev => prev + 1);
         } catch (error) {
@@ -30,6 +30,10 @@ const SectionFilter = () => {
             return;
         }
     };
+
+    const modalFields = [
+        { name: "name", label: "სექციის დამატება", type: "text", placeholder: "შეიყვანეთ სექცია" }
+    ];
 
     return (
         <div className="w-full h-[750px] ag-theme-alpine flex flex-col items-end">
@@ -44,10 +48,8 @@ const SectionFilter = () => {
             {isModalOpen && <Modal
                 onClose={() => setIsModalOpen(false)}
                 onSubmit={handleAddSection}
-                title="სექციის დამატება"
-                inputLabel="სექციის დასახელება"
-                inputPlaceholder="სექციის დასახელების შეყვანა"
-                showInput
+                title="ფილიალი/ადგილის დასახელება"
+                fields={modalFields}
             />}
             <FilterTable
                 key={tableKey}

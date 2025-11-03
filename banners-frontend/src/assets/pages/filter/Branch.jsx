@@ -22,9 +22,13 @@ const Branch = () => {
         return [];
     };
 
-    const handleAddBranch = async (value) => {
+    const modalFields = [
+        { name: "name", label: "ფილიალის/ადგილის დამატება", type: "text", placeholder: "შეიყვანეთ დასახელება" }
+    ];
+
+    const handleAddBranch = async (values) => {
         try {
-            await defaultInstance.post("/filters", { type: "branch", name: value });
+            await defaultInstance.post("/filters", { type: "branch", name: values.name });
             setIsModalOpen(false);
             setTableKey(prev => prev + 1);
         } catch (error) {
@@ -41,15 +45,13 @@ const Branch = () => {
                 onClick={() => setIsModalOpen(true)}
             >
                 <FiPlus className="text-[16px]" />
-                ფილიალის/ადგილის/ქალაქის დამატება
+                ფილიალი/ადგილის დასახელება
             </button>
             {isModalOpen && <Modal
                 onClose={() => setIsModalOpen(false)}
                 onSubmit={handleAddBranch}
-                title="ფილიალის/ადგილის დამატება"
-                inputLabel="ფილიალის/ადგილის დასახელება"
-                inputPlaceholder="დასახელების შეყვანა"
-                showInput
+                title="ფილიალი/ადგილის დასახელება"
+                fields={modalFields}
             />}
             <FilterTable
                 key={tableKey}

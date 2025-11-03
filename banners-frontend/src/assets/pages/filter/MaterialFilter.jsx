@@ -22,7 +22,7 @@ const MaterialFilter = () => {
 
     const handleAddMaterial = async (value) => {
         try {
-            await defaultInstance.post("/filters", { type: "material", name: value });
+            await defaultInstance.post("/filters", { type: "material", name: value.name });
             setIsModalOpen(false);
             setTableKey(prev => prev + 1);
         } catch (error) {
@@ -30,6 +30,10 @@ const MaterialFilter = () => {
             return;
         }
     };
+
+    const modalFields = [
+        { name: "name", label: "მასალის დამატება", type: "text", placeholder: "შეიყვანეთ მასალა" }
+    ];
 
     return (
         <div className="w-full h-[750px] ag-theme-alpine flex flex-col items-end">
@@ -45,9 +49,7 @@ const MaterialFilter = () => {
                 onClose={() => setIsModalOpen(false)}
                 onSubmit={handleAddMaterial}
                 title="მასალის დამატება"
-                inputLabel="მასალის დასახელება"
-                inputPlaceholder="მასალის დასახელების შეყვანა"
-                showInput
+                fields={modalFields}
             />}
             <FilterTable
                 key={tableKey}
